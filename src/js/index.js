@@ -10,11 +10,19 @@ function TodoList(props) {
 	console.log("HEEELLLLLOOOOOO");
 	const [todo, setTodo] = useState([]);
 	const [task, setTask] = useState("");
+	const [taskToDelete, setTaskToDelete] = useState("");
 	function addTask() {
 		if (task != "") {
 			setTodo([...todo, task]);
 			setTask("");
 		}
+	}
+	function deleteTask() {
+		console.log("DELETE TASK CALLED");
+		let newList = todo;
+		newList.splice(taskToDelete - 1, 1);
+		setTodo(newList);
+		setTaskToDelete("");
 	}
 	return (
 		<div>
@@ -25,10 +33,17 @@ function TodoList(props) {
 				placeholder="Please type your name"
 			/>
 			<button onClick={() => addTask()}>Add task</button>
-			<ul>
+			<ol>
 				{todo.length === 0 && <li>No tasks</li>}
 				{todo.length != 0 && todo.map((t) => <li>{t}</li>)}
-			</ul>
+			</ol>
+			<input
+				type="text"
+				onChange={(e) => setTaskToDelete(e.target.value)}
+				value={taskToDelete}
+				placeholder="Please enter the number of the task to delete"
+			/>
+			<button onClick={() => deleteTask()}>Delete Task </button>
 		</div>
 	);
 }
